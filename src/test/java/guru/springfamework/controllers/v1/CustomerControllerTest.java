@@ -115,7 +115,7 @@ public class CustomerControllerTest {
 
     @Test
     public void testUpdateCustomer() throws Exception {
-        //given
+        // Given
         CustomerDTO customer = new CustomerDTO();
         customer.setFirstName("Fred");
         customer.setLastName("Flintstone");
@@ -125,10 +125,36 @@ public class CustomerControllerTest {
         returnDTO.setLastName(customer.getLastName());
         returnDTO.setCustomerUrl("/api/v1/customers/1");
 
+        // When
         when(customerService.saveCustomerByDTO(anyLong(), any(CustomerDTO.class))).thenReturn(returnDTO);
 
-        //when/then
+        // Then
         mockMvc.perform(put("/api/v1/customers/1")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(asJsonString(customer)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.firstName", equalTo("Fred")))
+                .andExpect(jsonPath("$.lastName", equalTo("Flintstone")))
+                .andExpect(jsonPath("$.customer_url", equalTo("/api/v1/customers/1")));
+    }
+
+    @Test
+    public void testPatchCustomer() throws Exception {
+        // Given
+        CustomerDTO customer = new CustomerDTO();
+        customer.setFirstName("Fred");
+
+        CustomerDTO returnDTO = new CustomerDTO();
+        returnDTO.setFirstName(customer.getFirstName());
+        returnDTO.setLastName("Flintstone");
+        returnDTO.setCustomerUrl("/api/v1/customers/1");
+
+        // When
+        when(customerService.patchCustomer(anyLong(), any(CustomerDTO.class))).thenReturn(returnDTO);
+
+        // Then
+        // --> Use the Http Patch method
+        mockMvc.perform(patch("/api/v1/customers/1")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(asJsonString(customer)))
                 .andExpect(status().isOk())
