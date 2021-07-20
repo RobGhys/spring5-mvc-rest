@@ -97,8 +97,8 @@ public class CustomerServiceTest {
         customerDTO.setFirstName("Jim");
 
         Customer savedCustomer = new Customer();
-        savedCustomer.setFirstName(customerDTO.getLastName());
-        savedCustomer.setFirstName(customerDTO.getLastName());
+        savedCustomer.setFirstName(customerDTO.getFirstName());
+        savedCustomer.setLastName(customerDTO.getLastName());
         savedCustomer.setId(1L);
 
         // When
