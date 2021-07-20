@@ -7,6 +7,8 @@ import org.mapstruct.factory.Mappers;
 
 @Mapper
 public interface CategoryMapper {
+    // Helper method that will generate an instance of the class
     CategoryMapper INSTANCE = Mappers.getMapper(CategoryMapper.class);
+
     CategoryDTO categoryToCategoryDTO(Category category);
 }
