@@ -19,6 +19,31 @@ public class Bootstrap implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
+        loadMyCategories();
+        loadMyCustomers();
+    }
+
+    private void loadMyCustomers() {
+        /********************************
+         ********** CUSTOMERS ***********
+         *******************************/
+        Customer client1 = new Customer();
+        client1.setId(1L);
+        client1.setFirstName("Pol");
+        client1.setLastName("Le Grand");
+
+        Customer client2 = new Customer();
+        client2.setId(2L);
+        client2.setFirstName("Yves");
+        client2.setLastName("Magnot");
+
+        customerRepository.save(client1);
+        customerRepository.save(client2);
+
+        System.out.println("Loaded: " + customerRepository.count() + " customers.");
+    }
+
+    private void loadMyCategories() {
         /********************************
          ********* CATEGORIES **********
          *******************************/
@@ -45,27 +70,5 @@ public class Bootstrap implements CommandLineRunner {
         categoryRepository.save(nuts);
 
         System.out.println("Loaded: " + categoryRepository.count() + " categories.");
-
-        /********************************
-         ********** CUSTOMERS ***********
-         *******************************/
-        Customer client1 = new Customer();
-        client1.setFirstName("Cli1");
-
-        Customer client2 = new Customer();
-        client2.setFirstName("Cli2");
-
-        Customer client3 = new Customer();
-        client3.setFirstName("Cli3");
-
-        Customer client4 = new Customer();
-        client4.setFirstName("Cli4");
-
-        customerRepository.save(client1);
-        customerRepository.save(client2);
-        customerRepository.save(client3);
-        customerRepository.save(client4);
-
-        System.out.println("Loaded: " + customerRepository.count() + " customers.");
     }
 }

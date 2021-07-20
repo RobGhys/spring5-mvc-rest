@@ -9,7 +9,6 @@ import static org.junit.Assert.*;
 
 public class CustomerMapperTest {
     CustomerMapper customerMapper = CustomerMapper.INSTANCE;
-    public static final Long ID = 1L;
     public static final String FIRST_NAME = "Robin";
     public static final String LAST_NAME = "Ghys";
 
@@ -21,7 +20,6 @@ public class CustomerMapperTest {
     public void customerToCustomerDTO() throws Exception {
         // Given
         Customer customer = new Customer();
-        customer.setId(ID);
         customer.setFirstName(FIRST_NAME);
         customer.setLastName(LAST_NAME);
 
@@ -29,7 +27,6 @@ public class CustomerMapperTest {
         CustomerDTO customerDTO = customerMapper.customerToCustomerDTO(customer);
 
         // Then
-        assertEquals(Long.valueOf(ID), customerDTO.getId());
         assertEquals(FIRST_NAME, customerDTO.getFirstName());
         assertEquals(LAST_NAME, customerDTO.getLastName());
     }

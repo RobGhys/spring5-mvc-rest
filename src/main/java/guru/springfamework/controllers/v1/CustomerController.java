@@ -27,10 +27,10 @@ public class CustomerController {
                 HttpStatus.OK);
     }
 
-    @GetMapping("{firstName}")
-    public ResponseEntity<CustomerDTO> getCustomerByFirstName(@PathVariable String firstName) {
+    @GetMapping("{id}")
+    public ResponseEntity<CustomerDTO> getCustomerById(@PathVariable Long id) {
         return new ResponseEntity<CustomerDTO>(
-                customerService.getCustomerByFirstName(firstName),
+                customerService.getCustomerById(id),
                 HttpStatus.OK);
     }
 }
