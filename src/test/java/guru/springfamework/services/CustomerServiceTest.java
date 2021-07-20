@@ -8,13 +8,20 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.Arrays;
 import java.util.List;
 
+import static org.hamcrest.Matchers.equalTo;
+import static guru.springfamework.controllers.v1.AbstractRestControllerTest.asJsonString;
 import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 public class CustomerServiceTest {
     public static final Long ID = 1L;
@@ -24,6 +31,8 @@ public class CustomerServiceTest {
 
     @Mock
     CustomerRepository customerRepository;
+
+    MockMvc mockMvc;
 
     @Before
     public void setUp() throws Exception {
@@ -45,7 +54,7 @@ public class CustomerServiceTest {
     }
 
     @Test
-    public void getCustomerByFirstNameTest() throws Exception {
+    public void getCustomerByIdTest() throws Exception {
         // Given
         Customer customer = new Customer();
         customer.setId(ID);
@@ -80,4 +89,26 @@ public class CustomerServiceTest {
         assertEquals(customerDTO.getFirstName(), savedDTO.getFirstName());
         assertEquals("/api/v1/customer/1", savedDTO.getCustomerUrl());
     }
+
+    @Test
+    public void saveCustomerByDTOTest() throws Exception {
+        // Given
+        CustomerDTO customerDTO = new CustomerDTO();
+        customerDTO.setFirstName("Jim");
+
+        Customer savedCustomer = new Customer();
+        savedCustomer.setFirstName(customerDTO.getLastName());
+        savedCustomer.setFirstName(customerDTO.getLastName());
+        savedCustomer.setId(1L);
+
+        // When
+        when(customerRepository.save(any(Customer.class))).thenReturn(savedCustomer);
+        CustomerDTO savedDTO = customerService.saveCustomerByDTO(1L, customerDTO);
+
+        // Then
+        assertEquals(customerDTO.getFirstName(), savedDTO.getFirstName());
+        assertEquals("/api/v1/customer/1", savedDTO.getCustomerUrl());
+    }
+
+
 }
