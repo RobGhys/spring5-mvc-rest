@@ -41,6 +41,7 @@ public class CustomerServiceImpl implements CustomerService {
                 .map(customerDTO -> {
                     //set API URL
                     customerDTO.setCustomerUrl(getCustomerUrl(id));
+
                     return customerDTO;
                 })
                 .orElseThrow(RuntimeException::new);
