@@ -13,7 +13,6 @@ public class CategoryMapperTest {
     public static final long ID = 1L;
     public static final String MY_NAME = "Rob";
 
-
     @Before
     public void setUp() throws Exception {
     }
@@ -29,7 +28,7 @@ public class CategoryMapperTest {
         CategoryDTO categoryDTO = categoryMapper.categoryToCategoryDTO(category);
 
         // Then
-        assertEquals(Long.valueOf(1L), categoryDTO.getId());
+        assertEquals(Long.valueOf(ID), categoryDTO.getId());
         assertEquals(MY_NAME, categoryDTO.getName());
     }
 }
