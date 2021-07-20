@@ -18,7 +18,7 @@ import static org.hamcrest.Matchers.equalTo;
 import static guru.springfamework.controllers.v1.AbstractRestControllerTest.asJsonString;
 import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.*;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -110,5 +110,13 @@ public class CustomerServiceTest {
         assertEquals("/api/v1/customer/1", savedDTO.getCustomerUrl());
     }
 
+    @Test
+    public void deleteCustomerByIdTest() throws Exception {
+        // Given
+        Long id = 1L;
+        customerRepository.deleteById(id);
 
+        // Then
+        verify(customerRepository, times(1)).deleteById(anyLong());
+    }
 }
