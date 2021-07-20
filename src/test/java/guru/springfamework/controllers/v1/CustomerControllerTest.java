@@ -17,8 +17,8 @@ import java.util.List;
 import static guru.springfamework.controllers.v1.AbstractRestControllerTest.asJsonString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
-import static org.junit.Assert.*;
-import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -53,12 +53,12 @@ public class CustomerControllerTest {
         CustomerDTO customerDTO1 = new CustomerDTO();
         customerDTO1.setLastName(LAST_NAME_1);
         customerDTO1.setFirstName(FIRST_NAME_1);
-        customerDTO1.setCustomerUrl("/api/v1/customer/1");
+        customerDTO1.setCustomerUrl(CustomerController.BASE_URL + "/1");
 
         CustomerDTO customerDTO2 = new CustomerDTO();
         customerDTO2.setLastName(LAST_NAME_2);
         customerDTO2.setFirstName(FIRST_NAME_2);
-        customerDTO2.setCustomerUrl("/api/v1/customer/2");
+        customerDTO2.setCustomerUrl(CustomerController.BASE_URL + "/2");
 
         List<CustomerDTO> customers = Arrays.asList(customerDTO1, customerDTO2);
 
@@ -66,7 +66,7 @@ public class CustomerControllerTest {
         when(customerService.getAllCustomers()).thenReturn(customers);
 
         // Then
-        mockMvc.perform(get("/api/v1/customers/")
+        mockMvc.perform(get(CustomerController.BASE_URL)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.customers", hasSize(2)));
@@ -78,13 +78,13 @@ public class CustomerControllerTest {
         CustomerDTO customerDTO = new CustomerDTO();
         customerDTO.setLastName(LAST_NAME_1);
         customerDTO.setFirstName(FIRST_NAME_1);
-        customerDTO.setCustomerUrl("/api/v1/customer/1");
+        customerDTO.setCustomerUrl(CustomerController.BASE_URL + "/1");
 
         // When
         when(customerService.getCustomerById(anyLong())).thenReturn(customerDTO);
 
         // Then
-        mockMvc.perform(get("/api/v1/customers/1/")
+        mockMvc.perform(get(CustomerController.BASE_URL + "/1")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.firstName", equalTo(FIRST_NAME_1)));
@@ -106,7 +106,7 @@ public class CustomerControllerTest {
         when(customerService.createNewCustomer(customerDTO)).thenReturn(returnDTO);
 
         // Then
-        mockMvc.perform(post("/api/v1/customers/")
+        mockMvc.perform(post(CustomerController.BASE_URL)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(asJsonString(customerDTO)))
                 .andExpect(status().isCreated())
@@ -124,13 +124,13 @@ public class CustomerControllerTest {
         CustomerDTO returnDTO = new CustomerDTO();
         returnDTO.setFirstName(customer.getFirstName());
         returnDTO.setLastName(customer.getLastName());
-        returnDTO.setCustomerUrl("/api/v1/customers/1");
+        returnDTO.setCustomerUrl(CustomerController.BASE_URL + "/1");
 
         // When
         when(customerService.saveCustomerByDTO(anyLong(), any(CustomerDTO.class))).thenReturn(returnDTO);
 
         // Then
-        mockMvc.perform(put("/api/v1/customers/1")
+        mockMvc.perform(put(CustomerController.BASE_URL + "/1")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(asJsonString(customer)))
                 .andExpect(status().isOk())
@@ -155,7 +155,7 @@ public class CustomerControllerTest {
 
         // Then
         // --> Use the Http Patch method
-        mockMvc.perform(patch("/api/v1/customers/1")
+        mockMvc.perform(patch(CustomerController.BASE_URL + "/1")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(asJsonString(customer)))
                 .andExpect(status().isOk())
@@ -166,7 +166,7 @@ public class CustomerControllerTest {
 
     @Test
     public void testDeleteCustomer() throws Exception {
-        mockMvc.perform(delete("/api/v1/customers/1")
+        mockMvc.perform(delete(CustomerController.BASE_URL + "/1")
             .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
 
