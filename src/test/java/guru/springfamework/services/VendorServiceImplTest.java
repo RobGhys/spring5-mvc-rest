@@ -73,7 +73,7 @@ public class VendorServiceImplTest {
         vendorDTO.setName("eBay");
 
         Vendor savedVendor = new Vendor();
-        savedVendor.setName(savedVendor.getName());
+        savedVendor.setName(vendorDTO.getName());
         savedVendor.setId(1L);
 
         // When
@@ -93,7 +93,7 @@ public class VendorServiceImplTest {
 
         Vendor savedVendor = new Vendor();
         savedVendor.setName(vendorDTO.getName());
-        savedVendor.setId(vendorDTO.getId());
+        savedVendor.setId(1L);
 
         // When
         when(vendorRepository.save(any(Vendor.class))).thenReturn(savedVendor);

@@ -145,7 +145,7 @@ public class VendorControllerTest {
         returnDTO.setVendorUrl(VendorController.BASE_URL + "/1");
 
         // When
-        when(vendorService.saveVendorByDTO(anyLong(), any(VendorDTO.class))).thenReturn(returnDTO);
+        when(vendorService.patchVendor(anyLong(), any(VendorDTO.class))).thenReturn(returnDTO);
 
         // Then
         mockMvc.perform(patch(VendorController.BASE_URL + "/1")
