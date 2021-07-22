@@ -67,6 +67,7 @@ public class VendorControllerTest {
 
         // Then
         mockMvc.perform(get(VendorController.BASE_URL)
+                .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.vendors", hasSize(2)));
@@ -84,6 +85,7 @@ public class VendorControllerTest {
 
         // Then
         mockMvc.perform(get(VendorController.BASE_URL + "/1")
+                .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.name", equalTo(NAME_1)));
@@ -105,8 +107,9 @@ public class VendorControllerTest {
 
         // Then
         mockMvc.perform(post(VendorController.BASE_URL)
-        .contentType(MediaType.APPLICATION_JSON)
-        .content(asJsonString(vendorDTO1)))
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(asJsonString(vendorDTO1)))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.name", equalTo("Amazon")))
                 .andExpect(jsonPath("$.vendor_url", equalTo("/api/v1/vendors/1")));
@@ -127,8 +130,9 @@ public class VendorControllerTest {
 
         // Then
         mockMvc.perform(put(VendorController.BASE_URL + "/1")
-        .contentType(MediaType.APPLICATION_JSON)
-        .content(asJsonString(vendor)))
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(asJsonString(vendor)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.name", equalTo("Amazon")))
                 .andExpect(jsonPath("$.vendor_url", equalTo(VendorController.BASE_URL + "/1")));
@@ -149,6 +153,7 @@ public class VendorControllerTest {
 
         // Then
         mockMvc.perform(patch(VendorController.BASE_URL + "/1")
+                .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(asJsonString(vendor)))
                 .andExpect(status().isOk())
