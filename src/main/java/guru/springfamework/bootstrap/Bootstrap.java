@@ -30,11 +30,11 @@ public class Bootstrap implements CommandLineRunner {
 
     private void loadMyVendors() {
         Vendor vendor1 = new Vendor();
-        vendor1.setId(1L);
+        //vendor1.setId(1L);
         vendor1.setName("Amazon");
 
         Vendor vendor2 = new Vendor();
-        vendor2.setId(2L);
+        //vendor2.setId(2L);
         vendor2.setName("ebay");
 
         vendorRepository.save(vendor1);
